@@ -9,8 +9,8 @@ This is a temporary script file.
 Imports
 """
 
-import numpy 
-import pandas 
+import numpy
+import pandas
 import sklearn
 import nltk
 import sklearn
@@ -39,11 +39,11 @@ Function Definitions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 # Ugly, but gets the job done
-# Takes the NLTK data and creates a binary indicator array for hte categories
+# Takes the NLTK data and creates a binary indicator array for the categories
 def Y_Trainer():
     y_train = [[0 for x in range(90)] for y in range(7769)]
     x = 0
-       
+
     # Cycle through each doc and check for training
     for doc in range(len(doc_list)):
         if doc_list[doc].startswith('training'):
@@ -52,13 +52,13 @@ def Y_Trainer():
                 if categories[cat] in reuters.categories(doc_list[doc]):
                     y_train[x][cat] = 1
             x += 1
-            
+
     return numpy.asarray(y_train)
 
 def Y_Tester():
     y_test = [[0 for x in range(90)] for y in range(3019)]
     x = 0
-    
+
     # Cycle through each doc and check for training
     for doc in range(len(doc_list)):
         if doc_list[doc].startswith('test'):
@@ -67,7 +67,7 @@ def Y_Tester():
                 if categories[cat] in reuters.categories(doc_list[doc]):
                     y_test[x][cat] = 1
             x += 1
-            
+
     return numpy.asarray(y_test)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -107,7 +107,7 @@ category_filter2 = []
 for index, row in df.iterrows():
     if row['file_count'] >= 50:
         category_filter2.append(row['categories'])
-        
+
 df2 = df[df.categories.isin(category_filter2)].sort_values('file_count', ascending = False)
 
 CategoryPlot2 = df2.plot(x = df2.loc[:,"categories"], kind = 'barh', title = 'Reduced Reuters (Only Categories >= 50 instances)')
@@ -174,7 +174,7 @@ pred = OVR.predict(X_Test)
 myScore = accuracy_score(Y_Test, pred)
 print("NB accuracy score was: " + str(myScore))
 
-# Try out a decision tree. 
+# Try out a decision tree.
 Tree = DecisionTreeClassifier()
 Tree.fit(X_Train, Y_Train)
 pred = Tree.predict(X_Test)
